@@ -1,12 +1,61 @@
-import Image from "next/image";
+import { promises as fs } from "fs";
+import path from "path";
+import Link from "next/link";
+import { compileMDX } from "next-mdx-remote/rsc";
 
-export default function Home() {
+export const metadata = {
+  title: "Projects",
+  description:
+    "Use these 50 real-world project ideas to learn by doing including building an ecommerce store and a budget manager.",
+};
+
+export default async function Projects() {
+  const filenames = await fs.readdir(path.join(process.cwd(), "src/posts"));
+
+  interface Frontmatter {
+    title: string;
+    description: string;
+  }
+
+  const projects = await Promise.all(
+    filenames.map(async (filename) => {
+      const content = await fs.readFile(
+        path.join(process.cwd(), "src/posts", filename),
+        "utf-8"
+      );
+      const { frontmatter } = await compileMDX<Frontmatter>({
+        source: content,
+        options: {
+          parseFrontmatter: true,
+        },
+      });
+      return {
+        filename,
+        slug: filename.replace(".mdx", ""),
+        ...frontmatter,
+      };
+    })
+  );
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <div className="flex items-center gap-2">
-        <Image src="/dark-logo.svg" alt="Earthfast" width={40} height={40} />
-        <h1 className="text-4xl font-bold">Earthfast Blog</h1>
-      </div>
-    </div>
+    <section>
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-10 md:mb-16">
+        Earthfast blog
+      </h1>
+
+      <h2 className="sr-only">Project Ideas</h2>
+      <ul>
+        {projects.map(({ title, description,slug }) => {
+          return (
+            <li key={slug} className="mb-4">
+              <Link href={`/${slug}`} className="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                <h3 className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition-colors duration-200">{title}</h3>
+                <p className="mt-2 text-gray-600">{description}</p>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }
