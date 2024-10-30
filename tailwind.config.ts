@@ -11,6 +11,10 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "gradient-color": "rgba(46, 147, 255, 0.32)",
+      },
+      maxWidth: {
+        wrapper: "75rem",
       },
     },
   },

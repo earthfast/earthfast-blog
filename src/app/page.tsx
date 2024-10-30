@@ -1,61 +1,66 @@
-import { promises as fs } from "fs";
-import path from "path";
 import Link from "next/link";
-import { compileMDX } from "next-mdx-remote/rsc";
+import { HiArrowUpRight } from "react-icons/hi2";
+import Image from "next/image";
+import { getBlogPosts } from "@/utils/blog";
+import { format } from "date-fns";
 
 export const metadata = {
-  title: "Projects",
+  title: "EarthFast Blog - Learn about us",
   description:
-    "Use these 50 real-world project ideas to learn by doing including building an ecommerce store and a budget manager.",
+    "Whatever you need to know about our product, ecosystem and team you can find here",
 };
 
-export default async function Projects() {
-  const filenames = await fs.readdir(path.join(process.cwd(), "src/posts"));
-
-  interface Frontmatter {
-    title: string;
-    description: string;
-  }
-
-  const projects = await Promise.all(
-    filenames.map(async (filename) => {
-      const content = await fs.readFile(
-        path.join(process.cwd(), "src/posts", filename),
-        "utf-8"
-      );
-      const { frontmatter } = await compileMDX<Frontmatter>({
-        source: content,
-        options: {
-          parseFrontmatter: true,
-        },
-      });
-      return {
-        filename,
-        slug: filename.replace(".mdx", ""),
-        ...frontmatter,
-      };
-    })
-  );
+export default async function Main() {
+  const posts = await getBlogPosts();
 
   return (
-    <section>
-      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-10 md:mb-16">
-        Earthfast blog
-      </h1>
-
-      <h2 className="sr-only">Project Ideas</h2>
-      <ul>
-        {projects.map(({ title, description,slug }) => {
-          return (
-            <li key={slug} className="mb-4">
-              <Link href={`/${slug}`} className="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                <h3 className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition-colors duration-200">{title}</h3>
-                <p className="mt-2 text-gray-600">{description}</p>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
+    <main className="max-w-wrapper mx-auto px-5 xl:px-0 overflow-hidden">
+      <div className="text-center mt-10 mb-12 sm:mb-20 sm:mt-28">
+        <h1 className="text-2xl sm:text-5xl font-bold mb-4">
+          Learn about Earthfast
+        </h1>
+        <p className="text-gray-400 text-sm sm:text-lg max-w-3xl mx-auto">
+          Whatever you need to know about our product, ecosystem and team you
+          can find here
+        </p>
+      </div>
+      <div className="grid gap-0">
+        {posts.map(({ title, description, imageUrl, slug, date }) => (
+          <article key={slug} className="group">
+            <Link
+              href={`/${slug}`}
+              className="block py-8 sm:py-12 px-4 sm:px-6 border-b border-white/10 hover:bg-white/5 transition-all duration-300"
+            >
+              <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-8">
+                <div className="relative w-full sm:w-72 h-48 flex-shrink-0">
+                  <Image
+                    src={imageUrl}
+                    alt={title}
+                    fill
+                    className="object-cover rounded-lg"
+                  />
+                </div>
+                <div className="flex-1 flex flex-col sm:flex-row justify-between items-start sm:items-center w-full">
+                  <div>
+                    <div className="text-gray-400 text-sm mb-3">
+                      {format(new Date(date + 'T00:00:00'), 'MMMM d, yyyy')}
+                    </div>
+                    <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3">
+                      {title}
+                    </h2>
+                    <p className="text-gray-400">{description}</p>
+                  </div>
+                  <div className="mt-4 sm:mt-0 sm:ml-8">
+                    <div className="p-3 border border-gray-700 rounded-full group-hover:bg-white group-hover:border-white transition-all duration-300">
+                      <HiArrowUpRight className="w-5 h-5 text-gray-400 group-hover:text-black transition-colors duration-300" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </article>
+        ))}
+      </div>
+    </main>
   );
 }

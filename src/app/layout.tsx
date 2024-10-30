@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cx from "classnames";
 import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,10 +33,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
-      <body className={cx(inter.className, "antialiased")}>{children}</body>
+      <body className={cx(inter.className, "antialiased")}>
+        <Header />
+        <div className="fixed bg-gradient-to-br from-transparent to-gradient-color rounded-full opacity-32 blur-3xl top-[-25%] left-1/2 transform -translate-x-1/2 h-[37.18rem] max-w-[90vw] w-[50rem]" />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
