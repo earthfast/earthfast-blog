@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { HiArrowUpRight } from "react-icons/hi2";
 import Image from "next/image";
-import { getBlogPosts } from "@/utils/blog";
 import { format } from "date-fns";
+import posts from "@/app/(posts)/metadata";
 
 export const metadata = {
   title: "EarthFast Blog - Learn about us",
@@ -11,8 +11,6 @@ export const metadata = {
 };
 
 export default async function Main() {
-  const posts = await getBlogPosts();
-
   return (
     <main className="max-w-wrapper mx-auto px-5 xl:px-0 overflow-hidden">
       <div className="text-center mt-10 mb-12 sm:mb-20 sm:mt-28">
