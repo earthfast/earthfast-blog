@@ -1,13 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { compileMDX } from "next-mdx-remote/rsc";
-
-interface Frontmatter {
-  title: string;
-  description: string;
-  imageUrl: string;
-  date: string;
-}
+import { Frontmatter } from "@/types";
 
 export async function getBlogPosts() {
   const filenames = await fs.readdir(path.join(process.cwd(), "src/posts"));

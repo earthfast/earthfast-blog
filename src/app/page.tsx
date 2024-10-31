@@ -43,7 +43,7 @@ export default async function Main() {
                 <div className="flex-1 flex flex-col sm:flex-row justify-between items-start sm:items-center w-full">
                   <div>
                     <div className="text-gray-400 text-sm mb-3">
-                      {format(new Date(date + 'T00:00:00'), 'MMMM d, yyyy')}
+                      {format(new Date(date + "T00:00:00"), "MMMM d, yyyy")}
                     </div>
                     <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3">
                       {title}

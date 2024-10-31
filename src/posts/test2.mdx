@@ -5,40 +5,46 @@ imageUrl: '/rent.jpeg'
 date: "2024-03-10"
 ---
 
+Learn how to deploy your <strong className="text-brand-blue-medium">frontend applications</strong> to <strong className="text-brand-purple">decentralized networks</strong>.
 
-# Testing
+## Why Decentralized Hosting?
 
-Create a <strong className="text-brand-blue-medium">notebook app</strong> to add, manage, and organize a <strong className="text-brand-purple">group of notes</strong>.
+Traditional web hosting relies on centralized servers, making your applications vulnerable to downtime, censorship, and single points of failure. Decentralized hosting offers a more resilient alternative, ensuring your frontend apps remain accessible and truly owned by you.
 
+## Step 1: Getting Started with IPFS
 
-## Working
+IPFS (InterPlanetary File System) is a peer-to-peer network for storing and sharing data. It's perfect for hosting static frontend applications.
 
-Taking notes is a great way to make sure we keep track of our thoughts or remember the important takeaways from a meeting. Being able to easily manage them and organize them is important for finding them later!
+1. Install IPFS Desktop or run an IPFS node
+2. Build your frontend application
+3. Upload your build folder to IPFS
+4. Access your site via IPFS gateway
 
-## Step 1
+## Step 2: Permanent Storage with Arweave
 
-The first requirement of a notebook is being able to take the notes. This can be pretty simple to start, where really you need some sort of input that collects what you write and stores it somewhere for later.
+While IPFS requires nodes to pin your content, Arweave offers truly permanent storage through its "permaweb":
 
-Create form to add new notes and view them in a list.
+1. Get some AR tokens
+2. Deploy your frontend build using 'arkb' CLI tool
+3. Your site is now permanently stored on the blockchain
 
-## Step 2
+## Step 3: Enhanced Features
 
-In order to find your notes later, you want some way of organizing those notes and a way to look them up. That includes adding categories or a tagging system as well as a UI to make searches from.
+Take your decentralized hosting to the next level:
 
-Add the ability to tag or categorize notes and an input to search through them with.
-
-## Step 3
-
-Whether we realize it or not, we can find connections between our thoughts and more importantly our notes, where we can take advantage of that network of thoughts for our notebook.
-
-Add Roam Research-inpsired linking of notes to create a network of thoughts.
-
-
-## To Do
+1. Configure ENS/DNSLink for human-readable domains
+2. Implement IPFS/Arweave gateway failover
+3. Set up automated deployment pipelines
+4. Monitor content availability across the network
 
 ## Toolbox
-- Gatsby Brain
-- Fuse.js
+- IPFS CLI/Desktop
+- Fleek.co
+- Arkb CLI
+- ENS Domains
+- Cloudflare IPFS Gateway
 
 ## Resources
-- [bit.ly/31wI45V](https://bit.ly/31wI45V)
+- [IPFS Documentation](https://docs.ipfs.tech)
+- [Arweave Deploy Guide](https://docs.arweave.org)
+- [Fleek Hosting](https://fleek.co)
