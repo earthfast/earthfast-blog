@@ -15,6 +15,15 @@ const nextConfig = {
     // Si necesitas cargar imágenes de dominios externos, añádelos aquí:
     // domains: ['ejemplo.com'],
   },
+  // Añadimos la configuración de webpack
+  webpack: (config) => {
+    // Asegúrate de que webpack maneje correctamente los archivos de contenido
+    config.module.rules.push({
+      test: /\.md$/,
+      use: "raw-loader",
+    });
+    return config;
+  },
 };
 
 const withMDX = createMDX({

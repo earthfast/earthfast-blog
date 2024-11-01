@@ -41,12 +41,20 @@ export async function generateMetadata({
 
 const getMdxComponent = async (slug: string) => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
-    console.log('baseUrl', baseUrl)
-    const rawMDX = await fetch(`${baseUrl}/content/${slug}.mdx`).then((res) =>
-      res.text()
-    );
-    console.log("rawMDX", rawMDX);
+    // Usar variables de entorno de Cloudflare Pages
+    const baseUrl =
+      process.env.CF_PAGES_URL ||
+      process.env.NEXT_PUBLIC_URL ||
+      "https://localhost:3000";
+
+    console.log('Fetching MDX from:', `${baseUrl}/content/${slug}.mdx`);
+
+    const rawMDX = await fetch(`${baseUrl}/content/${slug}.mdx`).then((res) => {
+      if (!res.ok) {
+        throw new Error(`Failed to fetch MDX file: ${res.status} ${res.statusText}`);
+      }
+      return res.text();
+    });
 
     const { frontmatter, content: body } = await compileMDX<Frontmatter>({
       source: rawMDX,
@@ -63,7 +71,7 @@ const getMdxComponent = async (slug: string) => {
       body,
     };
   } catch (e) {
-    console.log("error", e);
+    console.error("Error loading MDX file:", e);
     notFound();
   }
 };
