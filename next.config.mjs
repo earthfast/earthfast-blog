@@ -5,22 +5,16 @@ import createMDX from "@next/mdx";
 const nextConfig = {
   // Configure pageExtensions to include MDX files
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
-  experimental: {
-    mdxRs: true,
-  },
   // Cloudflare Pages specific configuration
   output: "standalone",
   images: {
     unoptimized: true,
-    // Si necesitas cargar imágenes de dominios externos, añádelos aquí:
-    // domains: ['ejemplo.com'],
   },
 };
 
 const withMDX = createMDX({
   options: {
-    parseFrontmatter: true,
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [[remarkGfm, { singleTilde: false }]],
     rehypePlugins: [],
   },
 });

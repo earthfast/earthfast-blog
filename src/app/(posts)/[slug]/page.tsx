@@ -4,6 +4,26 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { format, parseISO } from 'date-fns'
 
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const post = posts.find((post) => post.slug === params.slug)
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    }
+  }
+
+  return {
+    title: `EarthFast - ${post.title}`,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      images: post.imageUrl ? [post.imageUrl] : [],
+    },
+  }
+}
+
 export function generateStaticParams() {
   return posts.map((post) => ({
     slug: post.slug,
