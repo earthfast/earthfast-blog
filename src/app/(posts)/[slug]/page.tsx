@@ -13,13 +13,16 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
   }
 
+  const baseUrl =
+    process.env.NEXT_PUBLIC_URL || "https://earthfast-blog.pages.dev/post-1";
+
   return {
     title: `EarthFast - ${post.title}`,
     description: post.description,
     openGraph: {
       title: post.title,
       description: post.description,
-      images: post.imageUrl ? [post.imageUrl] : [],
+      images: post.imageUrl ? [`${baseUrl}${post.imageUrl}`] : [],
     },
   }
 }
