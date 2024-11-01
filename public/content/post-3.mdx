@@ -1,0 +1,43 @@
+---
+title: 'Building a Decentralized Note-Taking App'
+description: 'Learn how to create a fully decentralized notebook application using IPFS storage and blockchain authentication for a truly user-owned note management system.'
+imageUrl: '/grants.jpg'
+date: "2023-09-13"
+---
+
+Create a <strong className="text-brand-blue-medium">decentralized notebook app</strong> to add, manage, and organize a <strong className="text-brand-purple">collection of encrypted notes</strong> that you truly own.
+
+## Introduction
+
+Traditional note-taking apps store your data on centralized servers, giving you little control over your information. By building a decentralized alternative, we can ensure your notes remain private, secure, and fully under your control using blockchain technology and IPFS storage.
+
+## Level 1: Basic Note Creation with IPFS
+
+The foundation of our decentralized notebook is storing notes on IPFS. We'll start by creating a simple interface that allows users to write notes and save them to IPFS, generating a unique content hash for each note that serves as its permanent identifier.
+
+Create a form to add new notes and store them on IPFS, then display them in a list using their IPFS hashes.
+
+## Level 2: Authentication and Encryption
+
+To ensure your notes remain private, we'll implement blockchain-based authentication (using MetaMask or similar) and client-side encryption. This way, only you can access and decrypt your notes, even though they're stored on the public IPFS network.
+
+Add wallet connection, note encryption, and a tagging system with encrypted metadata.
+
+## Level 3: Decentralized Search and Linking
+
+Building on our encrypted foundation, we'll implement a local search index and the ability to create connections between notes. All metadata and relationships will be stored on-chain, with the content remaining on IPFS.
+
+Add local search functionality and Roam Research-inspired note linking while maintaining decentralization.
+
+## Toolbox
+- IPFS (for decentralized storage)
+- Web3.js (for blockchain interaction)
+- Lit Protocol (for encryption)
+- OrbitDB (for decentralized indexing)
+- Fuse.js (for local search)
+
+## Resources
+- [IPFS Documentation](https://docs.ipfs.tech/)
+- [Web3.js Getting Started](https://web3js.readthedocs.io/)
+- [Lit Protocol Docs](https://developer.litprotocol.com/)
+- [OrbitDB Docs](https://github.com/orbitdb/orbit-db)

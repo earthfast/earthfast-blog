@@ -1,30 +1,79 @@
-import { notFound } from 'next/navigation'
-import posts from '../metadata'
-import Link from 'next/link'
-import Image from 'next/image'
-import { format, parseISO } from 'date-fns'
+export const runtime = "edge";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { format, parseISO } from "date-fns";
+import { Frontmatter } from "@/types";
+import { compileMDX } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 
-export function generateStaticParams() {
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
-
-const getMdxComponent = async (slug: string) => {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
   try {
-    const component = await import(`@/content/${slug}.mdx`)
-    return component.default
+    const { frontmatter } = await getMdxComponent(params.slug);
+
+    return {
+      title: frontmatter.title,
+      description: frontmatter.description,
+      openGraph: {
+        title: frontmatter.title,
+        description: frontmatter.description,
+        images: frontmatter.imageUrl ? [frontmatter.imageUrl] : [],
+      },
+    };
   } catch (e) {
     console.log("error", e);
-    notFound()
+    return {
+      title: "Post Not Found",
+      description: "The post you're looking for does not exist",
+    };
   }
 }
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
-  const post = posts.find((post) => post.slug === params.slug);
-  if (!post) notFound();
+// export function generateStaticParams() {
+//   return posts.map((post) => ({
+//     slug: post.slug,
+//   }))
+// }
 
-  const MDXContent = await getMdxComponent(params.slug)
+const getMdxComponent = async (slug: string) => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+    console.log('baseUrl', baseUrl)
+    const rawMDX = await fetch(`${baseUrl}/content/${slug}.mdx`).then((res) =>
+      res.text()
+    );
+    console.log("rawMDX", rawMDX);
+
+    const { frontmatter, content: body } = await compileMDX<Frontmatter>({
+      source: rawMDX,
+      options: {
+        parseFrontmatter: true,
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+      },
+    });
+
+    return {
+      frontmatter,
+      body,
+    };
+  } catch (e) {
+    console.log("error", e);
+    notFound();
+  }
+};
+
+export default async function PostPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { body, frontmatter } = await getMdxComponent(params.slug);
 
   return (
     <div className="mt-10 max-w-[1000px] mx-auto px-5 xl:px-0">
@@ -36,26 +85,24 @@ export default async function PostPage({ params }: { params: { slug: string } })
       </Link>
 
       <div className="mt-4">
-        {post.date && (
+        {frontmatter.date && (
           <p className="text-gray-500 text-md mb-2">
-            {format(parseISO(post.date), "MMMM d, yyyy")} • {"5 mins"}
+            {format(parseISO(frontmatter.date), "MMMM d, yyyy")} • {"5 mins"}
           </p>
         )}
-        <h1 className="text-4xl font-bold">{post.title}</h1>
-        {post.imageUrl && (
+        <h1 className="text-4xl font-bold">{frontmatter.title}</h1>
+        {frontmatter.imageUrl && (
           <div className="relative w-full max-w-4xl h-[300px] my-8">
             <Image
-              src={post.imageUrl}
-              alt={post.title}
+              src={frontmatter.imageUrl}
+              alt={frontmatter.title}
               fill
               className="object-cover rounded-lg"
               priority
             />
           </div>
         )}
-        <div className="prose prose-invert max-w-[800px]">
-          <MDXContent />
-        </div>
+        <div className="prose prose-invert max-w-[800px]">{body}</div>
       </div>
     </div>
   );
