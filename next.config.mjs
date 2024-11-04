@@ -5,8 +5,8 @@ import createMDX from "@next/mdx";
 const nextConfig = {
   // Configure pageExtensions to include MDX files
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
-  // Cloudflare Pages specific configuration
-  output: "standalone",
+  // Change output to 'export' for static page generation
+  output: "export",
   images: {
     unoptimized: true,
   },
