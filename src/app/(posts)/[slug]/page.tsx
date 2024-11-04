@@ -1,45 +1,22 @@
 import { notFound } from 'next/navigation'
-import posts from '../metadata'
 import Link from 'next/link'
 import Image from 'next/image'
 import { format, parseISO } from 'date-fns'
 import { compileMDX } from 'next-mdx-remote/rsc'
 import { Frontmatter } from '@/types'
 import remarkGfm from 'remark-gfm'
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = posts.find((post) => post.slug === params.slug)
+import { posts } from '@/config/posts';
 
-  if (!post) {
+export async function generateMetadata({ params: { slug } }: { params: { slug: string } }) {
+  const mdxFile = await import(`!!raw-loader!@/content/${slug}.mdx`);
+
+  if (!mdxFile) {
     return {
-      title: 'Post Not Found',
-    }
+      title: "Post Not Found",
+    };
   }
-
-  const baseUrl =
-    process.env.NEXT_PUBLIC_URL || "https://earthfast-blog.pages.dev/post-1";
-
-  return {
-    title: `EarthFast - ${post.title}`,
-    description: post.description,
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      images: post.imageUrl ? [`${baseUrl}${post.imageUrl}`] : [],
-    },
-  }
-}
-
-export function generateStaticParams() {
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
-
-const getMdxComponent = async (slug: string) => {
-  try {
-    const component2 = await import(`!!raw-loader!@/content/${slug}.mdx`);
-  const { frontmatter, content: body } = await compileMDX<Frontmatter>({
-    source: component2.default,
+  const { frontmatter } = await compileMDX<Frontmatter>({
+    source: mdxFile.default,
     options: {
       parseFrontmatter: true,
       mdxOptions: {
@@ -47,6 +24,35 @@ const getMdxComponent = async (slug: string) => {
       },
     },
   });
+  const baseUrl =
+    process.env.NEXT_PUBLIC_URL || "https://earthfast-blog.pages.dev/post-1";
+
+  return {
+    title: `EarthFast - ${frontmatter.title}`,
+    description: frontmatter.description,
+    openGraph: {
+      title: frontmatter.title,
+      description: frontmatter.description,
+      images: frontmatter.imageUrl ? [`${baseUrl}${frontmatter.imageUrl}`] : [],
+    },
+  }
+}
+export async function generateStaticParams() {
+  return posts.map(slug => ({ slug }));
+}
+
+const getMdxComponent = async (slug: string) => {
+  try {
+    const component2 = await import(`!!raw-loader!@/content/${slug}.mdx`);
+    const { frontmatter, content: body } = await compileMDX<Frontmatter>({
+      source: component2.default,
+      options: {
+        parseFrontmatter: true,
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+      },
+    });
     return {
       frontmatter,
       body
@@ -58,10 +64,9 @@ const getMdxComponent = async (slug: string) => {
 }
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
-  const post = posts.find((post) => post.slug === params.slug);
-  if (!post) notFound();
-
   const { frontmatter, body } = await getMdxComponent(params.slug)
+
+    if (!frontmatter?.title) notFound();
 
   return (
     <div className="mt-10 max-w-[1000px] mx-auto px-5 xl:px-0">

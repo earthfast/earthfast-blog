@@ -2,12 +2,14 @@
   "name": "earthfast-blog",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run posts && next build",
     "start": "next start",
     "lint": "next lint",
-    "pages:build": "next build && next-on-pages"
+    "pages:build": "next build && next-on-pages",
+    "posts": "node scripts/generatePostList.js"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
