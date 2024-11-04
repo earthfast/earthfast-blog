@@ -2,30 +2,14 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { format, parseISO } from 'date-fns'
-import { compileMDX } from 'next-mdx-remote/rsc'
-import { Frontmatter } from '@/types'
-import remarkGfm from 'remark-gfm'
 import { posts } from '@/config/posts';
+import { getPost } from '@/utils/blog';
 
-export async function generateMetadata({ params: { slug } }: { params: { slug: string } }) {
-  const mdxFile = await import(`!!raw-loader!@/content/${slug}.mdx`);
-
-  if (!mdxFile) {
-    return {
-      title: "Post Not Found",
-    };
-  }
-  const { frontmatter } = await compileMDX<Frontmatter>({
-    source: mdxFile.default,
-    options: {
-      parseFrontmatter: true,
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-      },
-    },
-  });
   const baseUrl =
     process.env.NEXT_PUBLIC_URL || "https://earthfast-blog.pages.dev/post-1";
+
+export async function generateMetadata({ params: { slug } }: { params: { slug: string } }) {
+  const { frontmatter } = await getPost(slug);
 
   return {
     title: `EarthFast - ${frontmatter.title}`,
@@ -41,32 +25,10 @@ export async function generateStaticParams() {
   return posts.map(slug => ({ slug }));
 }
 
-const getMdxComponent = async (slug: string) => {
-  try {
-    const component2 = await import(`!!raw-loader!@/content/${slug}.mdx`);
-    const { frontmatter, content: body } = await compileMDX<Frontmatter>({
-      source: component2.default,
-      options: {
-        parseFrontmatter: true,
-        mdxOptions: {
-          remarkPlugins: [remarkGfm],
-        },
-      },
-    });
-    return {
-      frontmatter,
-      body
-    }
-  } catch (e) {
-    console.log("error", e);
-    notFound()
-  }
-}
-
 export default async function PostPage({ params }: { params: { slug: string } }) {
-  const { frontmatter, body } = await getMdxComponent(params.slug)
+  const { frontmatter, content } = await getPost(params.slug);
 
-    if (!frontmatter?.title) notFound();
+  if (!frontmatter?.description) notFound();
 
   return (
     <div className="mt-10 max-w-[1000px] mx-auto px-5 xl:px-0">
@@ -95,9 +57,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
             />
           </div>
         )}
-        <div className="prose prose-invert max-w-[800px]">
-          {body}
-        </div>
+        <div className="prose prose-invert max-w-[800px]">{content}</div>
       </div>
     </div>
   );

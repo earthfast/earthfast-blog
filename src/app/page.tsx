@@ -2,47 +2,13 @@ import Link from "next/link";
 import { HiArrowUpRight } from "react-icons/hi2";
 import Image from "next/image";
 import { format } from "date-fns";
-import { compileMDX } from "next-mdx-remote/rsc";
-import { Frontmatter } from "@/types";
-import remarkGfm from "remark-gfm";
-import { posts } from "@/config/posts";
+import { getAllPosts } from "@/utils/blog";
 
 export const metadata = {
   title: "EarthFast Blog - Learn about us",
   description:
     "Whatever you need to know about our product, ecosystem and team you can find here",
 };
-
-async function getAllPosts() {
-  const postsData = await Promise.all(
-    posts.map(async (slug) => {
-      try {
-        const mdxFile = await import(`!!raw-loader!@/content/${slug}.mdx`);
-        const { frontmatter } = await compileMDX<Frontmatter>({
-          source: mdxFile.default,
-          options: {
-            parseFrontmatter: true,
-            mdxOptions: {
-              remarkPlugins: [remarkGfm],
-            },
-          },
-        });
-
-        return {
-          ...frontmatter,
-          slug,
-        };
-      } catch (e) {
-        console.error(`Error loading post ${slug}:`, e);
-        return null;
-      }
-    })
-  );
-
-  return postsData.filter(
-    (post) => post !== null
-  );
-}
 
 export default async function Main() {
   const posts = await getAllPosts();
