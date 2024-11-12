@@ -5,7 +5,7 @@ import Button from "@/components/Button";
 function Header() {
   return (
     <header className="py-5 px-5 xl:px-0 max-w-wrapper mx-auto flex justify-between items-center">
-      <Link href="/" className="flex items-center gap-3">
+      <Link href="https://earthfast.com" className="flex items-center gap-3">
         <Image
           width={36}
           height={36}
