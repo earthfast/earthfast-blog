@@ -16,11 +16,10 @@ export default async function Main() {
     <main className="max-w-wrapper mx-auto px-5 xl:px-0 overflow-hidden">
       <div className="text-center mt-10 mb-12 sm:mb-20 sm:mt-28">
         <h1 className="text-2xl sm:text-5xl font-bold mb-4">
-          Learn about Earthfast
+          Blog
         </h1>
         <p className="text-gray-400 text-sm sm:text-lg max-w-3xl mx-auto">
-          Whatever you need to know about our product, ecosystem and team you
-          can find here
+          Updates and news about Earthfast
         </p>
       </div>
       <div className="grid gap-0">
