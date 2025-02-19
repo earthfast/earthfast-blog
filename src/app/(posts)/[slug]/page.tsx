@@ -64,12 +64,16 @@ export default async function PostPage({ params }: { params: { slug: string } })
           <p className="text-md my-4">{frontmatter.description}</p>
         )}
         {frontmatter.imageUrl && (
-          <div className="relative w-full max-w-4xl h-[300px] my-8">
+          <div className="relative w-full max-w-4xl aspect-[16/9] my-8">
             <Image
               src={frontmatter.imageUrl}
               alt={frontmatter.title}
               fill
-              className="object-cover rounded-lg"
+              className="rounded-lg"
+              style={{ 
+                objectFit: 'contain',
+                objectPosition: 'center'
+              }}
               priority
             />
           </div>

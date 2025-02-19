@@ -35,7 +35,11 @@ export default async function Main() {
                     src={imageUrl}
                     alt={title}
                     fill
-                    className="object-cover rounded-lg"
+                    className="rounded-lg"
+                    style={{ 
+                      objectFit: 'contain',
+                      objectPosition: 'center'
+                    }}
                   />
                 </div>
                 <div className="flex-1 flex flex-col sm:flex-row justify-between items-start sm:items-center w-full">
