@@ -60,6 +60,9 @@ export default async function PostPage({ params }: { params: { slug: string } })
           </p>
         )}
         <h1 className="text-4xl font-bold">{frontmatter.title}</h1>
+        {frontmatter.description && (
+          <p className="text-md my-4">{frontmatter.description}</p>
+        )}
         {frontmatter.imageUrl && (
           <div className="relative w-full max-w-4xl h-[300px] my-8">
             <Image

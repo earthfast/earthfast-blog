@@ -2,6 +2,7 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import { Frontmatter } from "@/types";
 import remarkGfm from "remark-gfm";
 import { posts } from "@/config/posts";
+import rehypeExternalLinks from 'rehype-external-links';
 
 export async function getPost(slug: string) {
   try {
@@ -13,6 +14,9 @@ export async function getPost(slug: string) {
         parseFrontmatter: true,
         mdxOptions: {
           remarkPlugins: [remarkGfm],
+          rehypePlugins: [
+            [rehypeExternalLinks, { target: '_blank' }]
+          ],
         },
       },
     });
