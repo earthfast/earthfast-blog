@@ -51,14 +51,14 @@ function Footer() {
           </div>
         </div>
       </footer>
-      <div className="flex w-full text-[11px] dark:text-body-dark items-center justify-center">
+      {/* <div className="flex w-full text-[11px] dark:text-body-dark items-center justify-center">
         <p className=" text-center px-4 pb-2">
           Need to report a copyright or compliance violations? Email{" "}
           <a href="mailto:compliance@earthfast.com" className="">
             compliance@earthfast.com
           </a>
         </p>
-      </div>
+      </div> */}
     </>
   );
 }
