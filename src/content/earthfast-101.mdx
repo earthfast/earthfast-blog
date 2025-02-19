@@ -1,0 +1,66 @@
+---
+title: 'EarthFast 101'
+description: 'How EarthFast works – a fully onchain website hosting platform with decentralized content delivery.'
+imageUrl: '/logo-slide.png'
+date: "2025-02-18"
+---
+
+# What is EarthFast?
+
+_<u>EarthFast is the easiest way to host a fully decentralized website controlled by your community.</u>_
+
+What does that really mean?
+
+1. Chain native
+
+    If you have a wallet, you can deploy a site. That means not just individuals and teams, but also DAOs, AI agents can set up hosting using our CLI, dashboard or via Farcaster Frames.
+
+2. Purpose Built
+
+    EarthFast is a hybrid on/off chain solution where the blazing-fast nodes that serve website content are staked on-chain, but operate off chain to serve website content with minimal latency.
+
+3. Decentralized Content Delivery
+
+    Your site loads directly in the browser from the decentralized node network. The only trusted part of the process is DNS and SSL termination, which we're working to decentralize.
+
+# How does it work?
+
+![Architecture Diagram](/ef-architecture.png)
+
+**Browser**
+
+The DNS for an EarthFast site directs the browser to a domain node which responds with either a service worker or proxies requests directly from the decentralized content network if the browser does not support service workers, as is the case with in-app browsers e.g. Telegram.
+
+The browser executes the service worker to render the content or directly renders the content in the case of the proxy.
+
+All this typically happens in &lt;500ms.
+
+**Smart Contracts**
+
+The contracts are the source of truth for projects and store the project's owner wallet, asset bundle url, validation checksum, node reservations and escrow for payments.
+
+The owner wallet can be an EOA or smart contract, and all actions performed by the project are stored in the history for a transparent, auditable log.
+
+**Content Network**
+
+Content in EarthFast is served through a decentralized network of content nodes, optimized for performance and security. Each node is registered and staked onchain with EarthFast's smart contracts.
+
+Nodes run optimized docker containers to serve content, and are capable of handling thousands of user requests per second.
+
+**Domain Node**
+
+The domain node provides SSL termination and responds to the browser's requests. This is currently the only trusted component in EarthFast, and will be eventually made trustless.
+
+Projects have the option to run their own domain node, have one or more third parties run domain nodes on their behalf or use our hosted "domain node as a service" or DNAAS.
+
+The domain node returns a service worker that runs in the browser to directly request site content from the decentralized content network and validate the content response  against the onchain cryptographic signature.
+
+## How do I get started?
+
+EarthFast is open to use by anyone right now! There's two ways to get started, you can create and manage a project by the CLI or Dashboard.
+
+[The Dashboard](https://dashboard.earthfast.com/) is the preferred way to get started on EarthFast. It automates a lot of the blockchain calls, lets you connect a GitHub repo to build on commit, add custom domain and manually upload assets without worrying about the minutiae of formatting asset bundles, creating reservations, etc.
+
+[The CLI](https://www.npmjs.com/package/earthfast-cli) is local, non-custodial, and gives you direct access to the smart contracts – but you'll have to format and send transactions manually. The instructions to create a project using the CLI are [here](https://docs.earthfast.com/projects/project-setup).
+
+Reach out to us via email at [contact@earthfast.com](mailto:contact@earthfast.com), on X at [@earthfast](https://x.com/earthfast) or Warpcast at [@earthfast](https://warpcast.com/earthfast).

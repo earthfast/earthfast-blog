@@ -5,10 +5,12 @@ import matter from "gray-matter";
 const contentDir = path.join(process.cwd(), "src/content");
 const outputPath = path.join(process.cwd(), "src/config/posts.ts");
 
+// Generate array of slugs for all posts, excluding hidden posts
 const posts = fs
   .readdirSync(contentDir)
   .filter((file) => file.endsWith(".mdx"))
   .map((file) => {
+    // Extract frontmatter data from MDX file and add slug based on filename
     const filePath = path.join(contentDir, file);
     const fileContents = fs.readFileSync(filePath, "utf8");
     const { data } = matter(fileContents);
