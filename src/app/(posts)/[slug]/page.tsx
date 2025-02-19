@@ -57,7 +57,12 @@ export default async function PostPage({ params }: { params: { slug: string } })
             />
           </div>
         )}
-        <div className="prose prose-invert max-w-[800px]">{content}</div>
+        <div className="prose prose-invert max-w-[800px]">
+          {frontmatter.description && (
+            <p className="text-md mb-4">{frontmatter.description}</p>
+          )}
+          {content}
+        </div>
       </div>
     </div>
   );
