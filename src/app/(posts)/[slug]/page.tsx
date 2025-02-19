@@ -21,6 +21,20 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
     },
   }
 }
+
+/**
+ * Generates mapping for all blog posts at build time
+ * For example,
+ *    if posts = ["example-1", "example-2"], this will return:
+ *    [
+ *      { slug: "example-1" },
+ *      { slug: "example-2" }
+ *    ]
+ * 
+ * These objects are used by Next.js to create static pages at the routes:
+ *  - /example-1
+ *  - /example-2
+ */
 export async function generateStaticParams() {
   return posts.map(slug => ({ slug }));
 }

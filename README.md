@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EarthFast Blog
+
+This is the repository for the EarthFast Blog, built with Next.js and MDX.
 
 ## Getting Started
 
-First, run the development server:
+To start the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the blog in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Creating a New Post
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Add a New MDX File**: Create a new `.mdx` file in the `src/content` directory. Use the following frontmatter template:
 
-## Learn More
+   ```mdx
+   ---
+   title: 'Your Post Title'
+   description: 'A brief description of your post.'
+   imageUrl: '/path-to-image.jpg'
+   date: "YYYY-MM-DD"
+   ---
 
-To learn more about Next.js, take a look at the following resources:
+   Your post content goes here.
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Generate Post List**: Run the following command to update the list of posts:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm run posts
+   # or
+   yarn posts
+   ```
 
-## Deploy on Vercel
+   This will update `src/config/posts.ts` with the new post.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Updating a Post
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Edit the MDX File**: Make changes directly in the `.mdx` file located in `src/content`.
+
+2. **Regenerate Post List**: After editing, run the post generation command to ensure the changes are reflected:
+
+   ```bash
+   npm run posts
+   # or
+   yarn posts
+   ```
+
+## Deployment
+
+To build and deploy the blog:
+
+```bash
+npm run build
+npm run start
+```
+
+This will compile the application for production and start the server.
+
+## Key Technologies
+
+- **Next.js**: Framework for server-side rendering and static site generation.
+- **MDX**: Allows writing JSX in Markdown for rich content.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+
+For more detailed information, refer to the source code and comments within the project.
