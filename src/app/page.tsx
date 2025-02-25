@@ -15,9 +15,7 @@ export default async function Main() {
   return (
     <main className="max-w-wrapper mx-auto px-5 xl:px-0 overflow-hidden">
       <div className="text-center mt-10 mb-12 sm:mb-20 sm:mt-28">
-        <h1 className="text-2xl sm:text-5xl font-bold mb-4">
-          EarthFast Blog
-        </h1>
+        <h1 className="text-2xl sm:text-5xl font-bold mb-4">EarthFast Blog</h1>
         <p className="text-gray-400 text-sm sm:text-lg max-w-3xl mx-auto">
           Updates and news
         </p>
@@ -30,13 +28,13 @@ export default async function Main() {
               className="block py-8 sm:py-12 px-4 sm:px-6 border-b border-white/10 hover:bg-white/5 transition-all duration-300"
             >
               <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-8">
-                <div className="relative w-full sm:w-72 h-48 flex-shrink-0">
-                  <Image
-                    src={imageUrl}
-                    alt={title}
-                    fill
-                    className="object-cover rounded-lg"
-                  />
+                <div className="relative w-full sm:w-72 flex-shrink-0 aspect-[16/9]">
+                    <Image
+                      src={imageUrl}
+                      alt={title}
+                      fill
+                      className="object-cover rounded-lg"
+                    />
                 </div>
                 <div className="flex-1 flex flex-col sm:flex-row justify-between items-start sm:items-center w-full">
                   <div>

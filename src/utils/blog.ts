@@ -3,6 +3,7 @@ import { Frontmatter } from "@/types";
 import remarkGfm from "remark-gfm";
 import { posts } from "@/config/posts";
 import rehypeExternalLinks from 'rehype-external-links';
+import readingTime from 'reading-time';
 
 export async function getPost(slug: string) {
   try {
@@ -20,9 +21,13 @@ export async function getPost(slug: string) {
         },
       },
     });
+    const readTime = readingTime(mdxFile.default).text;
 
     return {
-      frontmatter,
+      frontmatter: {
+        ...frontmatter,
+        readingTime: readTime,
+      },
       content,
     };
 
