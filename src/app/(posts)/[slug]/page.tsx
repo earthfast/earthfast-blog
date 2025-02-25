@@ -30,7 +30,7 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
  *      { slug: "example-1" },
  *      { slug: "example-2" }
  *    ]
- * 
+ *
  * These objects are used by Next.js to create static pages at the routes:
  *  - /example-1
  *  - /example-2
@@ -61,10 +61,12 @@ export default async function PostPage({ params }: { params: { slug: string } })
         )}
         <h1 className="text-4xl font-bold">{frontmatter.title}</h1>
         {frontmatter.description && (
-          <p className="text-md my-4">{frontmatter.description}</p>
+          <div className="max-w-[800px] my-4">
+            <p className="text-md text-gray-300 italic my-2">{frontmatter.description}</p>
+          </div>
         )}
         {frontmatter.imageUrl && (
-          <div className="relative w-full max-w-4xl h-[300px] my-8">
+          <div className="relative w-full max-w-4xl aspect-[16/9] my-8">
             <Image
               src={frontmatter.imageUrl}
               alt={frontmatter.title}
