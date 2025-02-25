@@ -35,7 +35,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={cx(inter.className, "antialiased")}>
         <Header />
-        <div className="fixed bg-gradient-to-br from-transparent to-gradient-color rounded-full opacity-32 blur-3xl top-[-25%] left-1/2 transform -translate-x-1/2 h-[37.18rem] max-w-[90vw] w-[50rem]" />
+        <div className="fixed bg-gradient-to-br from-transparent to-gradient-color rounded-full opacity-32 blur-3xl top-[-25%] left-1/2 transform -translate-x-1/2 h-[37.18rem] max-w-[90vw] w-[50rem] z-[-1]" />
         {children}
         <Footer />
       </body>
