@@ -1,10 +1,80 @@
 ---
-title: 'Audius 2'
-description: 'Audius on EF'
-imageUrl: '/host.jpg'
-date: "2025-02-13"
-hidden: true
+title: 'Audius Migrates Protocol Dashboard to EarthFast'
+description: 'Web3 music platform chooses EarthFast for decentralized frontend hosting'
+imageUrl: '/audius.png'
+date: "2025-02-21"
 ---
 
-Audius is a decentralized music platform that allows users to upload, stream, and share music with each other. It is built on the Ethereum blockchain and uses a smart contract to manage the music library.
+We’re excited to announce that decentralized music streaming platform Audius has chosen EarthFast to host their protocol dashboard. This decision highlights Audius’ commitment to being the most decentralized music protocol in existence.
 
+> “EarthFast is the only consumer-accessible way to fully decentralize a frontend application today, full stop. From hosting to decision making around what to host, EarthFast puts that control in the hands of the Audius community.” – Roneil Rumburg, Audius CEO
+
+# About Audius
+
+Audius is the world’s largest decentralized music streaming platform, with [250 million total streams](https://decrypt.co/305649/audius-solana-airdrop-music-streams-250-million).
+
+The protocol’s foundation, [Open Audio Foundation](https://audius.org/), operates a dashboard that serves multiple essential functions including staking, delegation, governance, and analytics.
+
+🔗 https://dashboard.audius.org/
+
+# What this means
+
+## Previous setup
+
+The Open Audio Foundation has been operating a dashboard serving multiple critical functions for protocol participants. Before now, this dashboard has been hosted via IPFS, and pinned by Audius validator nodes. This setup had a few drawbacks:
+
+- Hosting on IPFS typically means relying on centralized gateways, often with [mixed performance](https://blog.cloudflare.com/ipfs-measurements/)
+- Running IPFS infrastructure on Audius validator nodes creates unnecessary overhead and complexity
+- Relying on Audius nodes to perform this service conflates incentives
+
+The previous flow was: *new commit pushed to dashboard GitHub repo → GH action to add new content to IPFS network → poll Audius validator nodes until new IPFS content hash is retrievable*
+
+## New setup
+
+The Foundation wanted a better separation of concerns, and to be able to directly manage the hosting of its dashboard UI. To this end, EarthFast is a web3 protocol specifically for frontend hosting, meaning dedicated tooling and clear incentives.
+
+The team cited these benefits:
+
+- **Verifiable security** – EarthFast-hosted sites run via an in-browser service worker, which ensures the checksum of the current site assets match the onchain checksum, protecting end-users from malicious sites
+- **Onchain governance** – an EarthFast project can be owned + managed by any onchain entity, including a governance contract, multisig, DAO
+- **Community owned** – this provides a path to giving control of version management to the Audius community, where staked participants can vote on future versions
+- **Specialized tooling** – EarthFast’s CLI offers a powerful CLI for granular controls + visibility, and EarthFast’s dedicated node network runs dedicated infra for performant hosting
+
+> _“Prior to switching to EarthFast, we’d had years of issues around availability and maintenance of sites hosted via IPFS. We now feel comfortable with EarthFast’s reliability and support, to ensure our community can always access the information they need.”_ – Ray Jacobson, Audius CTO
+
+# How it works
+
+The Audius team chose to use the [earthfast-cli](https://github.com/earthfast/earthfast-cli) for more granular configuration + non-custodial tx signing, although EarthFast also offers a [dashboard for simplicity](https://dashboard.earthfast.com/).
+
+The Audius foundation team’s new flow with EarthFast looks like this:
+
+## Initial Setup
+
+1. Using the `earthfast-cli`, the team [created a project](https://docs.earthfast.com/projects/project-setup#create-the-project) on the EarthFast smart contracts.
+![EarthFast Project Create](/audius/project-create.png)
+
+2. After escrowing USDC for hosting payments, the team [reserved content nodes](https://docs.earthfast.com/projects/project-setup#h.2urvg3z7vw9) using the CLI.
+
+3. Next, the team set up a CI action to automatically detect new commits and bundle + publish the assets to the EarthFast network. [This code is opensourced here](https://github.com/AudiusProject/audius-protocol/blob/main/.circleci/src/jobs/%40protocol-dashboard-jobs.yml).
+
+4. Finally, the team connected their own custom domain using [EarthFast’s tooling](https://docs.earthfast.com/projects/project-setup#custom-domain).
+
+## Version Updates
+
+1. On each code commit, a CI action automatically publishes new assets to the onchain project
+
+2. Content nodes monitor chain for new version updates and immediately begin serving them as detected
+
+Once EarthFast mainnet is live, Audius plans to transition control of its’ EarthFast upgrade authority to the on-chain governance process.
+
+![Audius CI Workflow](/audius/ci-workflow.png)
+
+## End-User Experience
+
+[dashboard.audius.org](https://dashboard.audius.org/) initially fetches the standard EarthFast service worker, and all website assets are then fetched from Audius’ reserved content nodes, and checked to ensure the content has not been tampered with. All this happens in the user’s browser, typically in &lt;200ms.
+
+![Audius Dashboard](/audius/protocol-dashboard.png)
+
+# How to Get Started
+
+To host your site on EarthFast's testnet, simply visit https://docs.earthfast.com, or follow on X at [@earthfast](https://x.com/earthfast).
