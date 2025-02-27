@@ -56,7 +56,8 @@ export default async function PostPage({ params }: { params: { slug: string } })
       <div className="mt-4">
         {frontmatter.date && (
           <p className="text-gray-500 text-md mb-2">
-            {format(parseISO(frontmatter.date), "MMMM d, yyyy")} • {frontmatter.readingTime}
+            {format(parseISO(frontmatter.date), "MMMM d, yyyy")}
+            {/* {format(parseISO(frontmatter.date), "MMMM d, yyyy")} • {frontmatter.readingTime} */}
           </p>
         )}
         <h1 className="text-4xl font-bold">{frontmatter.title}</h1>
