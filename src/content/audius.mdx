@@ -13,9 +13,9 @@ We’re excited to announce that decentralized music streaming platform Audius h
 
 Audius is the world’s largest decentralized music streaming platform, with [250 million total streams](https://decrypt.co/305649/audius-solana-airdrop-music-streams-250-million).
 
-The protocol’s foundation, [Open Audio Foundation](https://audius.org/), operates a dashboard that serves multiple essential functions including staking, delegation, governance, and analytics.
+The protocol’s foundation, [Open Audio Foundation](https://audius.org), operates a dashboard that serves multiple essential functions including staking, delegation, governance, and analytics.
 
-🔗 https://dashboard.audius.org/
+https://dashboard.audius.org
 
 # What this means
 
@@ -23,7 +23,7 @@ The protocol’s foundation, [Open Audio Foundation](https://audius.org/), opera
 
 The Open Audio Foundation has been operating a dashboard serving multiple critical functions for protocol participants. Before now, this dashboard has been hosted via IPFS, and pinned by Audius validator nodes. This setup had a few drawbacks:
 
-- Hosting on IPFS typically means relying on centralized gateways, often with [mixed performance](https://blog.cloudflare.com/ipfs-measurements/)
+- Hosting on IPFS typically means relying on centralized gateways, often with [mixed performance](https://blog.cloudflare.com/ipfs-measurements)
 - Running IPFS infrastructure on Audius validator nodes creates unnecessary overhead and complexity
 - Relying on Audius nodes to perform this service conflates incentives
 
@@ -44,7 +44,7 @@ The team cited these benefits:
 
 # How it works
 
-The Audius team chose to use the [earthfast-cli](https://github.com/earthfast/earthfast-cli) for more granular configuration + non-custodial tx signing, although EarthFast also offers a [dashboard for simplicity](https://dashboard.earthfast.com/).
+The Audius team chose to use the [earthfast-cli](https://github.com/earthfast/earthfast-cli) for more granular configuration + non-custodial tx signing, although EarthFast also offers a [dashboard for simplicity](https://dashboard.earthfast.com).
 
 The Audius foundation team’s new flow with EarthFast looks like this:
 
@@ -71,7 +71,7 @@ Once EarthFast mainnet is live, Audius plans to transition control of its’ Ear
 
 ## End-User Experience
 
-[dashboard.audius.org](https://dashboard.audius.org/) initially fetches the standard EarthFast service worker, and all website assets are then fetched from Audius’ reserved content nodes, and checked to ensure the content has not been tampered with. All this happens in the user’s browser, typically in &lt;200ms.
+[dashboard.audius.org](https://dashboard.audius.org) initially fetches the standard EarthFast service worker, and all website assets are then fetched from Audius’ reserved content nodes, and checked to ensure the content has not been tampered with. All this happens in the user’s browser, typically in &lt;200ms.
 
 ![Audius Dashboard](/audius/protocol-dashboard.png)
 
