@@ -17,6 +17,14 @@ const config: Config = {
       maxWidth: {
         wrapper: "75rem",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            'blockquote p:first-of-type::before': { content: 'none' },
+            'blockquote p:last-of-type::after': { content: 'none' },
+          },
+        },
+      },
     },
   },
   plugins: [typography],
